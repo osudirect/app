@@ -17,22 +17,9 @@ function createWindow() {
         const savePath = path.join(app.getPath('downloads'), item.getFilename());
         item.setSavePath(savePath);
 
-        item.on("updated", (event, state) => {
-            if (state === 'interrupted') {
-                console.log('Download is interrupted but can be resumed')
-              } else if (state === 'progressing') {
-                if (item.isPaused()) {
-                  console.log('Download is paused')
-                }
-              }
-        })
-
         item.once('done', (event, state) => {
             if (state === 'completed') {
-            shell.openPath(path.join(app.getPath('downloads'), item.getFilename()))
-              console.log('Download successfully')
-            } else {
-              console.log(`Download failed: ${state}`)
+                shell.openPath(path.join(app.getPath('downloads'), item.getFilename()))
             }
         })
     })
